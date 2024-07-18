@@ -20,7 +20,8 @@
     "devDependencies": {
         "@craco/craco": "^5.9.0",
         "react-scripts": "^5.0.1",
-        "typescript": "^4.5.5"
+        "typescript": "^4.5.5",
+        "webpack": "^4.47.0"
     },
     "scripts": {
         "start": "craco start",
