@@ -1,36 +1,40 @@
-.App {
-  font-family: sans-serif;
-  font-size: 1.5em;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.handle-bar:hover {
+    background: #2493fc;
 }
 
-textarea {
-  font-size: 1.1em;
-  width: 70%;
-  display: block;
-  margin: auto;
+body {
+    font-family: 'Fira Code', monospace;
+    font-optical-sizing: auto;
+    font-style: normal;
 }
 
-table {
-  border: 1px solid #1c6ea4;
-  background-color: #eeeeee;
-  width: 40%;
-  margin: 1.5em auto;
-  text-align: left;
-  border-collapse: collapse;
-  text-align: right;
+.fira-code-300 {
+    font-family: 'Fira Code', monospace;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
 }
 
-thead {
-  font-weight: bold;
-  text-align: center;
-  border: 2px solid #999;
+.fira-code-500 {
+    font-family: 'Fira Code', monospace;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
 }
 
-th,
-td {
-  border: 1px solid #aaa;
+.fira-code-600 {
+    font-family: 'Fira Code', monospace;
+    font-optical-sizing: auto;
+    font-weight: 600;
+    font-style: normal;
 }
-
-.error {
-  color: #922;
+.fira-code-bold {
+    font-family: 'Fira Code', monospace;
+    font-optical-sizing: auto;
+    font-weight: 700;
+    font-style: normal;
 }
