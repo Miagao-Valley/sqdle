@@ -47,9 +47,23 @@ function useTodaysChallenge() {
             const allTableSQL = generateSELECTAllTablesSQL(table_names);
 
             const res = db.exec(allTableSQL);
-            const tablesGenerated = res.map((data, index) =>
+            let tablesGenerated = res.map((data, index) =>
                 transformSQLDataToTable(data, table_names[index])
             );
+
+            // Find the target table
+            const targetTableIndex = tablesGenerated.findIndex(
+                (table) => table.name === "target"
+            );
+            const targetTable = tablesGenerated[targetTableIndex];
+
+            // Remove target table
+            tablesGenerated = tablesGenerated.filter(
+                (table) => table.name !== "target"
+            );
+
+            // Push to the first index
+            tablesGenerated.unshift(targetTable);
 
             setTables(tablesGenerated);
         } catch (err) {
@@ -62,13 +76,12 @@ function useTodaysChallenge() {
 }
 
 export default function App() {
-    const { db } = useSQLDB();
     const { tables } = useTodaysChallenge();
 
     return (
         <div className="flex flex-col min-h-screen bg-[#F8EDED]">
             <Header />
-            <main className="px-5 pb-5 pt-3 flex-1 flex gap-3">
+            <main className="px-5 pb-5 pt-3 flex-1 flex gap-3 flex-wrap-reverse">
                 <Tables tables={tables} />
                 <SQLInput />
             </main>

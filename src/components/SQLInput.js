@@ -10,7 +10,7 @@ function SQLInput() {
     const [code, setCode] = useState("SELECT * FROM table_x WHERE ...");
 
     return (
-        <div className="border border-[#173B45] min-h-full flex-1 flex flex-col overflow-hidden rounded">
+        <div className="border flex-1 min-w-[400px] flex flex-col overflow-hidden rounded bg-white">
             <header>
                 <div className="p-3 flex items-center gap-2 border-b text-white font-bold bg-[#173B45]">
                     <CodeIcon size={16} /> <p>SQL Statement</p>
@@ -21,7 +21,6 @@ function SQLInput() {
                 value={code}
                 onValueChange={(code) => setCode(code)}
                 highlight={(code) => highlight(code, languages.sql)}
-                textareaClassName="!text-white"
                 padding={10}
                 style={{
                     fontFamily: '"Fira code", "Fira Mono", monospace',
