@@ -10,6 +10,7 @@
     "license": "MIT",
     "dependencies": {
         "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+        "@tanstack/react-query": "^5.51.14",
         "ag-grid-react": "^32.0.2",
         "browserify-fs": "^1.0.0",
         "crypto-browserify": "^3.12.0",
