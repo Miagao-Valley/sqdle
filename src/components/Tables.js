@@ -11,23 +11,21 @@ const ResizeBar = React.forwardRef((props, ref) => {
             {...restProps}
             className="absolute -right-3 top-0 h-full handle-bar flex items-center justify-center cursor-ew-resize"
         >
-            <GripVertical size={12} />
+            <GripVertical size={12} color="#173B45" />
         </div>
     );
 });
 
-function Tables() {
+function Tables({ tables }) {
     return (
         <ResizableBox
-            className="border rounded bg-gray-300 min-h-full"
+            className="border border-[#173B45] rounded bg-[#173B45] min-h-full text-white"
             axis="x"
             handle={<ResizeBar />}
             resizeHandles={['e']}
             width={650}
         >
-            <div className="overflow-hidden">
-                table asdasdasdahksdhaksdhkasdkj
-            </div>
+            <div className="overflow-hidden">asdasda</div>
         </ResizableBox>
     );
 }
