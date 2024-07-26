@@ -1,6 +1,6 @@
 const sampleData = {
     data: {
-        table_names: ['employees', 'departments', 'projects', 'result'],
+        table_names: ["employees", "departments", "projects", "target"],
         query: `
       CREATE TABLE employees (
           id INTEGER PRIMARY KEY,
@@ -38,7 +38,7 @@ const sampleData = {
       ('Project Gamma', 2),
       ('Project Delta', 3);
 
-      CREATE TABLE result (
+      CREATE TABLE target (
           id INTEGER,
           name TEXT,
           department TEXT,
@@ -46,7 +46,7 @@ const sampleData = {
           project_name TEXT
       );
 
-      INSERT INTO result (id, name, department, salary, project_name) VALUES
+      INSERT INTO target (id, name, department, salary, project_name) VALUES
       (1, 'Alice', 'Engineering', 70000, 'Project Alpha'),
       (1, 'Alice', 'Engineering', 70000, 'Project Beta'),
       (2, 'Bob', 'Engineering', 65000, 'Project Alpha'),

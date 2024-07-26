@@ -9,43 +9,61 @@ import Tables from "./components/Tables";
 import SQLInput from "./components/SQLInput";
 import sampleData from "./mockData/sampleData";
 import { generateSELECTAllTablesSQL } from "./helpers/sql";
+import { transformSQLDataToTable } from "./helpers/tables";
 
-function useTodaysChallenge() {}
-
-export default function App() {
+function useSQLDB() {
     const [db, setDb] = useState(null);
     const [error, setError] = useState(null);
-    const [tables, setTables] = useState([]);
-
-    useEffect(async () => {
-        try {
-            const SQL = await initSqlJs({ locateFile: () => sqlWasm });
-            setDb(new SQL.Database());
-        } catch (err) {
-            setError(err);
-        }
-    }, []);
 
     useEffect(() => {
-        if (!db) {
+        (async () => {
+            try {
+                console.log("init sql");
+                const SQL = await initSqlJs({ locateFile: () => sqlWasm });
+                setDb(new SQL.Database());
+            } catch (err) {
+                setError(err);
+            }
+        })();
+    }, []);
+
+    return { db, error, setError };
+}
+
+function useTodaysChallenge() {
+    const [tables, setTables] = useState([]);
+    const { db, error, setError } = useSQLDB();
+
+    useEffect(() => {
+        if (!db || error) {
             return;
         }
 
         try {
-            db.exec(sampleData.data.query);
+            const { query, table_names } = sampleData.data;
 
-            const allTableSQL = generateSELECTAllTablesSQL(
-                sampleData.data.table_names
+            db.exec(query);
+
+            const allTableSQL = generateSELECTAllTablesSQL(table_names);
+
+            const res = db.exec(allTableSQL);
+            const tablesGenerated = res.map((data, index) =>
+                transformSQLDataToTable(data, table_names[index])
             );
 
-            const a = db.exec(allTableSQL);
-
-            console.log(a);
+            setTables(tablesGenerated);
         } catch (err) {
             console.error(err);
             setError(err);
         }
-    }, [db]);
+    }, [db, error]);
+
+    return { tables, error };
+}
+
+export default function App() {
+    const { db } = useSQLDB();
+    const { tables } = useTodaysChallenge();
 
     return (
         <div className="flex flex-col min-h-screen bg-[#F8EDED]">
