@@ -1,14 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import './styles.css';
-import initSqlJs from 'sql.js';
+import React, { useState, useEffect } from "react";
+import "./styles.css";
+import initSqlJs from "sql.js";
 
 // Required to let webpack 4 know it needs to copy the wasm file to our assets
-import sqlWasm from '!!file-loader?name=sql-wasm-[contenthash].wasm!sql.js/dist/sql-wasm.wasm';
-import Header from './components/Header';
-import Tables from './components/Tables';
-import SQLInput from './components/SQLInput';
-import sampleData from './mockData/sampleData';
-import { generateSELECTAllTablesSQL } from './helpers/sql';
+import sqlWasm from "!!file-loader?name=sql-wasm-[contenthash].wasm!sql.js/dist/sql-wasm.wasm";
+import Header from "./components/Header";
+import Tables from "./components/Tables";
+import SQLInput from "./components/SQLInput";
+import sampleData from "./mockData/sampleData";
+import { generateSELECTAllTablesSQL } from "./helpers/sql";
+
+function useTodaysChallenge() {}
 
 export default function App() {
     const [db, setDb] = useState(null);
@@ -33,7 +35,7 @@ export default function App() {
             db.exec(sampleData.data.query);
 
             const allTableSQL = generateSELECTAllTablesSQL(
-                sampleData.data.table_names,
+                sampleData.data.table_names
             );
 
             const a = db.exec(allTableSQL);

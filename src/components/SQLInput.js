@@ -11,8 +11,11 @@ function SQLInput() {
 
     return (
         <div className="border border-[#173B45] min-h-full flex-1 flex flex-col overflow-hidden rounded">
-            <header className="p-3 flex items-center gap-2 border-b text-white font-bold bg-[#173B45]">
-                <CodeIcon size={16} /> <p>SQL Code</p>
+            <header>
+                <div className="p-3 flex items-center gap-2 border-b text-white font-bold bg-[#173B45]">
+                    <CodeIcon size={16} /> <p>SQL Statement</p>
+                </div>
+                <div></div>
             </header>
             <Editor
                 value={code}
