@@ -1,4 +1,4 @@
-import { Info, Target } from "lucide-react";
+import { Info, Loader, Target } from "lucide-react";
 import React from "react";
 
 import { AgGridReact } from "ag-grid-react";
@@ -7,7 +7,13 @@ import clsx from "clsx";
 
 function Tables({ tables }) {
     return (
-        <div className="space-y-4">
+        <div className="space-y-4 relative">
+            {!tables.length && (
+                <div className="flex gap-1 items-center">
+                    <Loader className="animate-spin mx-center" size={24} />
+                    <p className="animate-pulse">LOADING</p>
+                </div>
+            )}
             {tables.map((table, index) => (
                 <div key={table.name}>
                     <div className="flex gap-1 items-center">
