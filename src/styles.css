@@ -7,34 +7,43 @@
 }
 
 body {
-    font-family: 'Fira Code', monospace;
+    font-family: "Fira Code", monospace;
     font-optical-sizing: auto;
     font-style: normal;
 }
 
 .fira-code-300 {
-    font-family: 'Fira Code', monospace;
+    font-family: "Fira Code", monospace;
     font-optical-sizing: auto;
     font-weight: 300;
     font-style: normal;
 }
 
 .fira-code-500 {
-    font-family: 'Fira Code', monospace;
+    font-family: "Fira Code", monospace;
     font-optical-sizing: auto;
     font-weight: 500;
     font-style: normal;
 }
 
 .fira-code-600 {
-    font-family: 'Fira Code', monospace;
+    font-family: "Fira Code", monospace;
     font-optical-sizing: auto;
     font-weight: 600;
     font-style: normal;
 }
 .fira-code-bold {
-    font-family: 'Fira Code', monospace;
+    font-family: "Fira Code", monospace;
     font-optical-sizing: auto;
     font-weight: 700;
     font-style: normal;
+}
+
+.ag-center-cols-viewport {
+    max-height: fit-content !important;
+    min-height: fit-content !important;
+}
+
+.ag-header-viewport {
+    border-bottom: 1px solid #d7e2e6;
 }

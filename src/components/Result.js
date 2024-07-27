@@ -28,7 +28,7 @@ function Result({ targetTable, result, error }) {
                 </div>
                 <pre className="text-red-500">{(error || "").toString()}</pre>
                 {result && (
-                    <div id="myGrid" className="ag-theme-builder">
+                    <div>
                         <AgGridReact
                             ref={gridRef}
                             domLayout="autoHeight"
