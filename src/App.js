@@ -11,14 +11,17 @@ import sampleData from "./mockData/sampleData";
 import { generateSELECTAllTablesSQL } from "./helpers/sql";
 import { transformSQLDataToTable } from "./helpers/tables";
 
-function useSQLDB() {
+import { Send, Table } from "lucide-react";
+import clsx from "clsx";
+import Result from "./components/Result";
+
+function useTodaysChallenge() {
     const [db, setDb] = useState(null);
     const [error, setError] = useState(null);
 
     useEffect(() => {
         (async () => {
             try {
-                console.log("init sql");
                 const SQL = await initSqlJs({ locateFile: () => sqlWasm });
                 setDb(new SQL.Database());
             } catch (err) {
@@ -27,12 +30,8 @@ function useSQLDB() {
         })();
     }, []);
 
-    return { db, error, setError };
-}
-
-function useTodaysChallenge() {
     const [tables, setTables] = useState([]);
-    const { db, error, setError } = useSQLDB();
+    const [targetTable, setTargetTable] = useState(null);
 
     useEffect(() => {
         if (!db || error) {
@@ -56,6 +55,7 @@ function useTodaysChallenge() {
                 (table) => table.name === "target"
             );
             const targetTable = tablesGenerated[targetTableIndex];
+            setTargetTable(targetTable);
 
             // Remove target table
             tablesGenerated = tablesGenerated.filter(
@@ -66,24 +66,106 @@ function useTodaysChallenge() {
             tablesGenerated.unshift(targetTable);
 
             setTables(tablesGenerated);
+
+            // Deny access to "target" table
+            db.exec("DROP TABLE target");
         } catch (err) {
             console.error(err);
             setError(err);
         }
     }, [db, error]);
 
-    return { tables, error };
+    return { tables, targetTable, db, error, setError };
 }
 
 export default function App() {
-    const { tables } = useTodaysChallenge();
+    const { tables, targetTable, db, error, setError } = useTodaysChallenge();
+    const [result, setResult] = useState(null);
+
+    const [selectedTab, setSelectedTab] = useState("tables");
+
+    function runSQL(code) {
+        if (!db) {
+            return;
+        }
+
+        setSelectedTab("result");
+
+        try {
+            const result = db.exec(code);
+
+            if (result && result.length > 0) {
+                if (result.length > 1) {
+                    setError(
+                        "Output is more than one table. Try again with another query"
+                    );
+                    return;
+                }
+
+                setResult(transformSQLDataToTable(result[0], "answer"));
+            } else {
+                setResult(null);
+            }
+
+            setError(null);
+        } catch (error) {
+            console.error(error);
+            setResult(null);
+            setError(error);
+        }
+    }
 
     return (
         <div className="flex flex-col min-h-screen bg-[#F8EDED]">
             <Header />
             <main className="px-5 pb-5 pt-3 flex-1 flex gap-3 flex-wrap-reverse">
-                <Tables tables={tables} />
-                <SQLInput />
+                <section className="border rounded bg-white min-h-full overflow-hidden flex-1 min-w-[600px]">
+                    <header className="flex items-center py-3 border-b text-white font-bold bg-[#173B45]">
+                        <button
+                            className={clsx(
+                                "flex items-center gap-2 px-4 border-r",
+                                selectedTab === "tables"
+                                    ? "text-white"
+                                    : "text-gray-400"
+                            )}
+                            onClick={() => setSelectedTab("tables")}
+                        >
+                            <Table size={16} /> <p>Tables</p>
+                        </button>
+                        <button
+                            className={clsx(
+                                "flex items-center gap-2 px-4",
+                                selectedTab === "result"
+                                    ? "text-white"
+                                    : "text-gray-400"
+                            )}
+                            onClick={() => setSelectedTab("result")}
+                        >
+                            <Send size={16} /> Result
+                        </button>
+                    </header>
+                    <div
+                        className={clsx(
+                            selectedTab === "tables" ? "block" : "hidden",
+                            "p-4"
+                        )}
+                    >
+                        <Tables tables={tables} />
+                    </div>
+                    <div
+                        className={clsx(
+                            selectedTab === "result" ? "block" : "hidden",
+                            "p-4"
+                        )}
+                    >
+                        <Result
+                            targetTable={targetTable}
+                            result={result}
+                            error={error}
+                        />
+                    </div>
+                </section>
+                <SQLInput runSQL={runSQL} />
             </main>
         </div>
     );

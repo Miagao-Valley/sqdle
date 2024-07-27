@@ -1,4 +1,4 @@
-import { Info, Send, Table } from "lucide-react";
+import { Info, Target } from "lucide-react";
 import React from "react";
 
 import { AgGridReact } from "ag-grid-react";
@@ -7,18 +7,11 @@ import clsx from "clsx";
 
 function Tables({ tables }) {
     return (
-        <div className="border rounded bg-white min-h-full overflow-hidden flex-1 min-w-[600px]">
-            <header className="flex items-center py-3 border-b text-white font-bold bg-[#173B45]">
-                <button className="flex items-center gap-2 px-4 border-r">
-                    <Table size={16} /> <p>Tables</p>
-                </button>
-                <button className="flex items-center gap-2 px-4 text-gray-400">
-                    <Send size={16} /> Result
-                </button>
-            </header>
-            <div className="p-4 space-y-4">
-                {tables.map((table, index) => (
-                    <div key={table.name}>
+        <div className="space-y-4">
+            {tables.map((table, index) => (
+                <div key={table.name}>
+                    <div className="flex gap-1 items-center">
+                        {index === 0 && <Target color="red" />}
                         <h2
                             className={clsx(
                                 "font-bold",
@@ -27,27 +20,26 @@ function Tables({ tables }) {
                         >
                             {table.name}
                         </h2>
-                        {index === 0 && (
-                            <div className="text-sm flex gap-1 items-center mb-2">
-                                <Info size={18} />
-                                Using the other tables below, create the correct
-                                SQL statement to get this target table.
-                            </div>
-                        )}
-                        <div id="myGrid" className="ag-theme-builder">
-                            <AgGridReact
-                                domLayout="autoHeight"
-                                autoSizeStrategy={{ type: "fitGridWidth" }}
-                                rowData={table.rows}
-                                columnDefs={table.columns}
-                            />
-                        </div>
-                        {index === 0 && (
-                            <div className="mt-8 h-2 bg-gray-300 rounded" />
-                        )}
                     </div>
-                ))}
-            </div>
+                    {index === 0 && (
+                        <p className="text-sm mb-2">
+                            Using the other tables below, create the correct SQL
+                            statement to get (SELECT) this target table.
+                        </p>
+                    )}
+                    <div id="myGrid" className="ag-theme-builder">
+                        <AgGridReact
+                            domLayout="autoHeight"
+                            autoSizeStrategy={{ type: "fitGridWidth" }}
+                            rowData={table.rows}
+                            columnDefs={table.columns}
+                        />
+                    </div>
+                    {index === 0 && (
+                        <div className="mt-8 h-2 bg-gray-300 rounded" />
+                    )}
+                </div>
+            ))}
         </div>
     );
 }
