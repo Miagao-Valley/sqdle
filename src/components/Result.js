@@ -3,19 +3,24 @@ import { AgGridReact } from "ag-grid-react";
 import "../gridStyle/ag-grid-theme-builder.css";
 import { Loader, Target } from "lucide-react";
 
-function Result({ targetTable, result, error }) {
-    const gridRef = useRef(null);
+function Result({ targetTable, result, error, isRendered }) {
+    const answerGridRef = useRef(null);
+    const targetGridRef = useRef(null);
 
-    const sizeToFit = useCallback(() => {
+    const sizeToFit = useCallback((gridRef) => {
         if (gridRef.current?.api) {
             gridRef.current.api.sizeColumnsToFit();
             // gridRef.current.api.sizeColumnsToFit();
         }
-    }, [gridRef.current]);
+    }, []);
 
     useEffect(() => {
-        sizeToFit();
+        sizeToFit(answerGridRef);
     }, [result]);
+
+    useEffect(() => {
+        sizeToFit(targetGridRef);
+    }, [isRendered]);
 
     return (
         <div className="space-y-4">
@@ -30,7 +35,7 @@ function Result({ targetTable, result, error }) {
                 {result && (
                     <div>
                         <AgGridReact
-                            ref={gridRef}
+                            ref={answerGridRef}
                             domLayout="autoHeight"
                             autoSizeStrategy={{ type: "fitGridWidth" }}
                             rowData={result.rows}
@@ -40,9 +45,9 @@ function Result({ targetTable, result, error }) {
                 )}
                 {/* No result and no error */}
                 {!result && !error && (
-                    <p className="text-red-600">
+                    <pre className="text-red-600">
                         No output. Try another query.
-                    </p>
+                    </pre>
                 )}
             </div>
 
@@ -52,8 +57,9 @@ function Result({ targetTable, result, error }) {
                     <h2 className="text-sm font-bold">TARGET</h2>
                 </div>
                 {targetTable ? (
-                    <div id="myGrid" className="ag-theme-builder">
+                    <div>
                         <AgGridReact
+                            ref={targetGridRef}
                             domLayout="autoHeight"
                             autoSizeStrategy={{ type: "fitGridWidth" }}
                             rowData={targetTable.rows}

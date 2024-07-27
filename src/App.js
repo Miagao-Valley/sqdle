@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import "./styles.css";
 import initSqlJs from "sql.js";
 
@@ -19,25 +19,7 @@ function useTodaysChallenge() {
     const [db, setDb] = useState(null);
     const [error, setError] = useState(null);
 
-    useEffect(() => {
-        (async () => {
-            try {
-                const SQL = await initSqlJs({ locateFile: () => sqlWasm });
-                setDb(new SQL.Database());
-            } catch (err) {
-                setError(err);
-            }
-        })();
-    }, []);
-
-    const [tables, setTables] = useState([]);
-    const [targetTable, setTargetTable] = useState(null);
-
-    useEffect(() => {
-        if (!db || error) {
-            return;
-        }
-
+    const handleSetup = useCallback((db) => {
         try {
             const { query, table_names } = sampleData.data;
 
@@ -73,7 +55,23 @@ function useTodaysChallenge() {
             console.error(err);
             setError(err);
         }
-    }, [db, error]);
+    }, []);
+
+    useEffect(() => {
+        (async () => {
+            try {
+                const SQL = await initSqlJs({ locateFile: () => sqlWasm });
+                const db = new SQL.Database();
+                handleSetup(db);
+                setDb(db);
+            } catch (err) {
+                setError(err);
+            }
+        })();
+    }, []);
+
+    const [tables, setTables] = useState([]);
+    const [targetTable, setTargetTable] = useState(null);
 
     return { tables, targetTable, db, error, setError };
 }
@@ -162,6 +160,7 @@ export default function App() {
                             targetTable={targetTable}
                             result={result}
                             error={error}
+                            isRendered={selectedTab === "result"}
                         />
                     </div>
                 </section>
