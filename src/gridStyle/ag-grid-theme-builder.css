@@ -4,15 +4,16 @@
  * See installation docs at https://www.ag-grid.com/javascript-data-grid/applying-theme-builder-styling-grid/
  */
 
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
 
 
 .ag-root-wrapper, .ag-measurement-container, .ag-apply-theme-variables {
-	--ag-background-color: var(--ag-inherited-background-color, #ffffff);
-	--ag-foreground-color: var(--ag-inherited-foreground-color, rgb(46, 55, 66));
+	--ag-background-color: var(--ag-inherited-background-color, #FFFFFF);
+	--ag-foreground-color: var(--ag-inherited-foreground-color, #555B62);
 	--ag-text-color: var(--ag-inherited-text-color, var(--ag-foreground-color));
-	--ag-accent-color: var(--ag-inherited-accent-color, #2196f3);
+	--ag-accent-color: var(--ag-inherited-accent-color, #087AD1);
 	--ag-invalid-color: var(--ag-inherited-invalid-color, #e02525);
-	--ag-border-color: var(--ag-inherited-border-color, color-mix(in srgb, transparent, var(--ag-foreground-color) 15%));
+	--ag-border-color: var(--ag-inherited-border-color, #D7E2E6);
 	--ag-wrapper-border: var(--ag-inherited-wrapper-border, solid 1px var(--ag-border-color));
 	--ag-row-border: var(--ag-inherited-row-border, none);
 	--ag-color-scheme: var(--ag-inherited-color-scheme, light);
@@ -24,12 +25,12 @@
 	--ag-pinned-column-border: var(--ag-inherited-pinned-column-border, solid 1px var(--ag-border-color));
 	--ag-pinned-row-border: var(--ag-inherited-pinned-row-border, solid 1px var(--ag-border-color));
 	--ag-side-panel-border: var(--ag-inherited-side-panel-border, none);
-	--ag-font-family: var(--ag-inherited-font-family, Arial);
-	--ag-chrome-background-color: var(--ag-inherited-chrome-background-color, color-mix(in srgb, transparent, var(--ag-foreground-color) 2%));
-	--ag-header-background-color: var(--ag-inherited-header-background-color, #F9FAFB);
+	--ag-font-family: var(--ag-inherited-font-family, Inter);
+	--ag-chrome-background-color: var(--ag-inherited-chrome-background-color, var(--ag-background-color));
+	--ag-header-background-color: var(--ag-inherited-header-background-color, #FFFFFF);
 	--ag-header-font-family: var(--ag-inherited-header-font-family, var(--ag-font-family));
 	--ag-header-font-weight: var(--ag-inherited-header-font-weight, 600);
-	--ag-header-font-size: var(--ag-inherited-header-font-size, 14px);
+	--ag-header-font-size: var(--ag-inherited-header-font-size, 13px);
 	--ag-header-text-color: var(--ag-inherited-header-text-color, #000000);
 	--ag-header-cell-hover-background-color: var(--ag-inherited-header-cell-hover-background-color, transparent);
 	--ag-header-cell-hover-background-transition-duration: var(--ag-inherited-header-cell-hover-background-transition-duration, 0.2s);
@@ -45,20 +46,20 @@
 	--ag-column-hover-color: var(--ag-inherited-column-hover-color, color-mix(in srgb, transparent, var(--ag-accent-color) 5%));
 	--ag-selected-row-background-color: var(--ag-inherited-selected-row-background-color, color-mix(in srgb, transparent, var(--ag-accent-color) 8%));
 	--ag-modal-overlay-background-color: var(--ag-inherited-modal-overlay-background-color, color-mix(in srgb, transparent, var(--ag-background-color) 66%));
-	--ag-odd-row-background-color: var(--ag-inherited-odd-row-background-color, #F9FAFB);
+	--ag-odd-row-background-color: var(--ag-inherited-odd-row-background-color, var(--ag-background-color));
 	--ag-border-radius: var(--ag-inherited-border-radius, 4px);
 	--ag-wrapper-border-radius: var(--ag-inherited-wrapper-border-radius, 4px);
 	--ag-cell-horizontal-padding: var(--ag-inherited-cell-horizontal-padding, calc(var(--ag-grid-size) * 2 * var(--ag-cell-horizontal-padding-scale)));
 	--ag-cell-widget-spacing: var(--ag-inherited-cell-widget-spacing, calc(var(--ag-grid-size) * 1.5));
-	--ag-cell-horizontal-padding-scale: var(--ag-inherited-cell-horizontal-padding-scale, 1);
+	--ag-cell-horizontal-padding-scale: var(--ag-inherited-cell-horizontal-padding-scale, 0.7);
 	--ag-row-group-indent-size: var(--ag-inherited-row-group-indent-size, calc(var(--ag-cell-widget-spacing) + var(--ag-icon-size)));
 	--ag-value-change-delta-up-color: var(--ag-inherited-value-change-delta-up-color, #43a047);
 	--ag-value-change-delta-down-color: var(--ag-inherited-value-change-delta-down-color, #e53935);
 	--ag-value-change-value-highlight-background-color: var(--ag-inherited-value-change-value-highlight-background-color, #16a08580);
-	--ag-grid-size: var(--ag-inherited-grid-size, 8px);
-	--ag-font-size: var(--ag-inherited-font-size, 14px);
+	--ag-grid-size: var(--ag-inherited-grid-size, 6px);
+	--ag-font-size: var(--ag-inherited-font-size, 13px);
 	--ag-row-height: var(--ag-inherited-row-height, calc(max(var(--ag-icon-size), var(--ag-font-size)) + var(--ag-grid-size) * 3.5 * var(--ag-row-vertical-padding-scale)));
-	--ag-row-vertical-padding-scale: var(--ag-inherited-row-vertical-padding-scale, 1);
+	--ag-row-vertical-padding-scale: var(--ag-inherited-row-vertical-padding-scale, 0.8);
 	--ag-header-height: var(--ag-inherited-header-height, calc(max(var(--ag-icon-size), var(--ag-font-size)) + var(--ag-grid-size) * 4.25 * var(--ag-header-vertical-padding-scale)));
 	--ag-header-vertical-padding-scale: var(--ag-inherited-header-vertical-padding-scale, 1);
 	--ag-popup-shadow: var(--ag-inherited-popup-shadow, 0 0 16px 0 #00000026);
