@@ -45,9 +45,7 @@ function Result({ targetTable, result, error, isRendered }) {
                 )}
                 {/* No result and no error */}
                 {!result && !error && (
-                    <pre className="text-red-600">
-                        No output. Try another query.
-                    </pre>
+                    <pre className="text-red-600">No output.</pre>
                 )}
             </div>
 
