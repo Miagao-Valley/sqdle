@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef } from "react";
+import React, { useCallback, useEffect, useMemo, useRef } from "react";
 import { AgGridReact } from "ag-grid-react";
 import "../gridStyle/ag-grid-theme-builder.css";
 import { Loader, Target } from "lucide-react";
@@ -10,7 +10,6 @@ function Result({ targetTable, result, error, isRendered }) {
     const sizeToFit = useCallback((gridRef) => {
         if (gridRef.current?.api) {
             gridRef.current.api.sizeColumnsToFit();
-            // gridRef.current.api.sizeColumnsToFit();
         }
     }, []);
 
@@ -22,13 +21,33 @@ function Result({ targetTable, result, error, isRendered }) {
         sizeToFit(targetGridRef);
     }, [isRendered]);
 
+    const scoreColor = useMemo(() => {
+        if (!result?.score || !targetTable) {
+            return "text-black";
+        }
+
+        const perfectScore = targetTable.rows.length;
+
+        if (result.score === perfectScore) {
+            return "text-green-500";
+        }
+
+        if (result.score >= perfectScore / 2) {
+            return "text-yellow-500";
+        }
+
+        return "text-red-500";
+    }, [result, targetTable]);
+
     return (
         <div className="space-y-4">
             <div>
                 <div className="flex gap-3 items-center">
                     <h2 className="font-bold text-lg">Answer</h2>
                     <p className="text-sm tracking-tighter">
-                        (<span className="text-red-500">0</span> / 10)
+                        (
+                        <span className={scoreColor}>{result?.score ?? 0}</span>{" "}
+                        / {targetTable?.rows.length ?? "?"})
                     </p>
                 </div>
                 <pre className="text-red-500">{(error || "").toString()}</pre>

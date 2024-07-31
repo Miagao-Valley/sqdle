@@ -9,7 +9,10 @@ import Tables from "./components/Tables";
 import SQLInput from "./components/SQLInput";
 import sampleData from "./mockData/sampleData";
 import { generateSELECTAllTablesSQL } from "./helpers/sql";
-import { transformSQLDataToTable } from "./helpers/tables";
+import {
+    transformSQLDataToTable,
+    transformToValidatedTable,
+} from "./helpers/tables";
 
 import { Send, Table } from "lucide-react";
 import clsx from "clsx";
@@ -83,7 +86,7 @@ export default function App() {
     const [selectedTab, setSelectedTab] = useState("tables");
 
     function runSQL(code) {
-        if (!db) {
+        if (!db || !targetTable) {
             return;
         }
 
@@ -100,7 +103,13 @@ export default function App() {
                     return;
                 }
 
-                setResult(transformSQLDataToTable(result[0], "answer"));
+                const tableData = transformSQLDataToTable(result[0], "answer");
+                const validatedTableData = transformToValidatedTable(
+                    targetTable,
+                    tableData
+                );
+
+                setResult(validatedTableData);
             } else {
                 setResult(null);
             }
