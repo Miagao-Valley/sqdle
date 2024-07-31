@@ -10,7 +10,6 @@ function Result({ targetTable, result, error, isRendered }) {
     const sizeToFit = useCallback((gridRef) => {
         if (gridRef.current?.api) {
             gridRef.current.api.sizeColumnsToFit();
-            // gridRef.current.api.sizeColumnsToFit();
         }
     }, []);
 
